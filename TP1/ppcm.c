@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Return gcd('a','b') with Euclidean algorithm */
 int         gcd_euclide(long int a, int b)
 {
     int     tmp;
@@ -17,6 +18,7 @@ int         gcd_euclide(long int a, int b)
     return (a);
 }
 
+/* Return lcm('a','b') with the formul lcm(a,b) = |a*b| / gcd(a,b) */
 int         lcm(long int a, int b)
 {
     if (a < 0)
@@ -26,6 +28,7 @@ int         lcm(long int a, int b)
     return ((a * b) / gcd_euclide(a, b));
 }
 
+/* Return the lcm of all int in the sequence 'seq' with atoi() */
 long int    all_lcm(char **seq, int len)
 {
     int         i;
@@ -37,6 +40,7 @@ long int    all_lcm(char **seq, int len)
     return (ret);
 }
 
+/* Write in stderr which one type error and return the # of error */
 int         print_err(int type_err)
 {
     switch (type_err)
@@ -50,6 +54,7 @@ int         print_err(int type_err)
     return (type_err);
 }
 
+/* Return 1 if all char in 's' are numeric else return 0 */
 int         is_all_numeric(char *s)
 {
     int     i;
@@ -60,6 +65,7 @@ int         is_all_numeric(char *s)
     return (1);
 }
 
+/* Return 2 if arg are missing, return 1 if one arg is not numeric else return 0  */
 int         parsing(int ac, char **av)
 {
     int     i;
@@ -77,9 +83,9 @@ int         main(int ac, char **av)
     int         type_err;
     long int    lcm;
 
-    if ((type_err = parsing(ac, av)))
+    if ((type_err = parsing(ac, av))) /* parse the arguments on stdin */
         return (print_err(type_err));
     lcm = all_lcm(&av[1], ac - 1);
-    printf("%ld\n", lcm);
+    printf("%ld\n", lcm); /* write in stdout the lcm value */
     return (0);
 }

@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+/* Renvoie la valeur de p parmis n la compléxité est O(2^n) */
 int     binomiaux(int n, int p)
 {
     if ((n == p || p == 0))
@@ -34,6 +36,7 @@ void     binomiaux_bis_aux(int *tab, int n)
         tab[i] += tab[i - 1];
 }
 
+/* Renvoie la valeur de p parmis n la compléxité est de O(n^2) */
 int     binomiaux_bis(int n, int p)
 {
     int     *tab;
@@ -53,6 +56,8 @@ int     binomiaux_bis(int n, int p)
     return (ret);
 }
 
+/* Demande à l'utilisateur de rentrer des valeurs entières pour les ranger dans
+ * le pointeur 'n' et 'p' */
 void    recup_n_et_p(int *n, int *p)
 {
     int     bon;
@@ -87,9 +92,9 @@ int     main(void)
     int     bin_ite;
 
     recup_n_et_p(&n, &p);
-    if (!(bin_rec = binomiaux(n, p)))
+    if (!(bin_rec = binomiaux(n, p))) /* calcul la valeur de p parmis n avec la fonction récursive */
         return (affiche_erreur(1));
-    if ((bin_ite = binomiaux_bis(n, p)) <= 0)
+    if ((bin_ite = binomiaux_bis(n, p)) <= 0) /* calcul la valeur de p parmis n avec la fonction itérative */
         return (affiche_erreur(bin_ite + 1));
     printf("b_rec(%d,%d) = %d\nb_ite(%d,%d) = %d\n", n, p, bin_rec, n, p, bin_ite);
     return (0);

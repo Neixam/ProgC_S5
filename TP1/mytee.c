@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #define BUFF_SIZE 1024
 
+/* Write in stderr which one type error and return the # of error */
 int     print_error(int type_error)
 {
     switch (type_error)
@@ -18,12 +19,14 @@ int     print_error(int type_error)
     return (type_error);
 }
 
+/* Write on adresse of FILE* 'out' the content of FILE* 'in', if an error was
+ * occured in fprintf() the function return 1 else return 0 */
 int     mytee(FILE **out, FILE *in)
 {
     char    tmp[BUFF_SIZE];
 
     while (fgets(tmp, BUFF_SIZE, in))
-        if (!fprintf(*out, "%s", tmp))
+        if (fprintf(*out, "%s", tmp) < 0)
             return (1);
     return (0);
 }
@@ -31,13 +34,13 @@ int     mytee(FILE **out, FILE *in)
 int     main(int ac, char **av)
 {
     FILE    *out;
-	FILE	*save;
+	FILE	*save; /* save stdin */
     char    tmp[BUFF_SIZE];
     int     i;
 
     if (ac >= 2)
     {
-        for (i = 1; i < ac; i++)
+        for (i = 1; i < ac; i++) /* write on all file in argument */
         {
             if (!(out = fopen(av[i], "w")))
                 return (print_error(1));
@@ -49,9 +52,10 @@ int     main(int ac, char **av)
 					return (print_error(1));
 			rewind(save);
         }
-		
+        if (ac > 2)
+            fclose(save);
     }
-	while (fgets(tmp, BUFF_SIZE, (ac >= 2) ? save : stdin))
+	while (fgets(tmp, BUFF_SIZE, (ac >= 2) ? save : stdin)) /* write stdin on stdout */
 		if (!printf("%s", tmp))
 			return (print_error(2));
     return (0);
