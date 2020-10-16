@@ -5,7 +5,7 @@
 
 # Variable
 CC 			=	gcc
-CFLAGS		=	-ansi -pedantic -Wall -pg
+CFLAGS		=	-ansi -pedantic -Wall
 
 ifneq (clean, $(firstword $(MAKECMDGOALS)))
     ifneq (all, $(firstword $(MAKECMDGOALS)))
